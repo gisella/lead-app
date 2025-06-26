@@ -1,0 +1,16 @@
+{
+  "projects": {
+    "database/prisma": {
+      "type": "library",
+      "root": "libs/database/prisma",
+      "entryFile": "index",
+      "sourceRoot": "libs/database/prisma/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/database/prisma/tsconfig.lib.json"
+      }
+    }
+  },
+  "compilerOptions": {
+    "webpack": true
+  }
+}

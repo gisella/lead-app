@@ -1,0 +1,47 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "declaration": true,
+    "removeComments": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "allowSyntheticDefaultImports": true,
+    "target": "ES2023",
+    "sourceMap": true,
+    "outDir": "./dist",
+    "baseUrl": "./",
+    "incremental": true,
+    "skipLibCheck": true,
+    "strictNullChecks": true,
+    "forceConsistentCasingInFileNames": true,
+    "noImplicitAny": false,
+    "strictBindCallApply": false,
+    "noFallthroughCasesInSwitch": false,
+    "paths": {
+      "@app/lead-core": [
+        "libs/lead-core/src"
+      ],
+      "@app/lead-core/*": [
+        "libs/lead-core/src/*"
+      ],
+      "@logger": [
+        "libs/shared/src/libs/logger"
+      ],
+      "@logger/*": [
+        "libs/shared/src/libs/logger/*"
+      ],
+      "@db": [
+        "libs/shared/src/libs/database"
+      ],
+      "@db/*": [
+        "libs/shared/src/libs/database/*"
+      ],
+      "@shared": [
+        "libs/shared/src/libs/shared"
+      ],
+      "@shared/*": [
+        "libs/shared/libs/shared/*"
+      ]
+    }
+  }
+}

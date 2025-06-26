@@ -1,0 +1,16 @@
+{
+  "projects": {
+    "lead-core": {
+      "type": "library",
+      "root": "libs/lead-core",
+      "entryFile": "index",
+      "sourceRoot": "libs/lead-core/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/lead-core/tsconfig.lib.json"
+      }
+    }
+  },
+  "compilerOptions": {
+    "webpack": true
+  }
+}

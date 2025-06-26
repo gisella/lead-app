@@ -1,0 +1,50 @@
+{
+  "$schema": "https://json.schemastore.org/nest-cli",
+  "collection": "@nestjs/schematics",
+  "sourceRoot": "apps/lead-service/src",
+  "compilerOptions": {
+    "deleteOutDir": true,
+    "webpack": true,
+    "tsConfigPath": "apps/lead-service/tsconfig.app.json"
+  },
+  "monorepo": true,
+  "root": "apps/lead-service",
+  "projects": {
+    "/shared/src/libs/logger": {
+      "type": "library",
+      "root": "libs/shared/src/libs/logger",
+      "entryFile": "index",
+      "sourceRoot": "libs/shared/src/libs/logger/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/shared/src/libs/logger/tsconfig.lib.json"
+      }
+    },
+    "lead-core": {
+      "type": "library",
+      "root": "libs/lead-core",
+      "entryFile": "index",
+      "sourceRoot": "libs/lead-core/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/lead-core/tsconfig.lib.json"
+      }
+    },
+    "lead-service": {
+      "type": "application",
+      "root": "apps/lead-service",
+      "entryFile": "main",
+      "sourceRoot": "apps/lead-service/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/lead-service/tsconfig.app.json"
+      }
+    },
+    "shared": {
+      "type": "library",
+      "root": "libs/shared",
+      "entryFile": "index",
+      "sourceRoot": "libs/shared/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/shared/tsconfig.lib.json"
+      }
+    }
+  }
+}
