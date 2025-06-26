@@ -1,0 +1,24 @@
+POST http://localhost:3000/api/lead-service
+Content-Type: application/json
+
+{
+  "amount": 50000,
+  "house_worth": 200000,
+  "city": "Milano",
+  "phone_nr": "+1234567890",
+  "owners": [
+    {
+      "first_name": "Mario",
+      "last_name": "Rossi",
+      "type": "FIRST",
+      "email": "mrossi@example.com",
+      "birth_date": "1990-01-01",
+      "monthly_income": 5000,
+      "monthly_payments": 12
+    }
+  ]
+}
+
+###
+
+GET http://localhost:3000/health
