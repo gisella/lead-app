@@ -1,5 +1,5 @@
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
-import { ValidationPipe } from '@nestjs/common';
+import { RequestMethod, ValidationPipe } from '@nestjs/common';
 import { Logger as PinoLogger, LoggerErrorInterceptor } from 'nestjs-pino';
 import { NestFactory } from '@nestjs/core';
 import { LeadServiceModule } from './lead-service.module';
@@ -23,7 +23,12 @@ async function bootstrap() {
   app.useGlobalInterceptors(new LoggerErrorInterceptor());
 
   const globalPrefix = '/api';
-  app.setGlobalPrefix(globalPrefix);
+  app.setGlobalPrefix(globalPrefix, {
+    exclude: [
+      { path: 'health', method: RequestMethod.GET },
+      { path: 'health/', method: RequestMethod.GET },
+    ],
+  });
 
   const port = process.env.LEAD_SERVICE_PORT || 3000;
 
@@ -83,9 +88,7 @@ async function bootstrap() {
     logger.log(
       `📚 Swagger documentation is available at: http://localhost:${port}/docs`,
     );
-    logger.log(
-      `🏥 Health check available at: http://localhost:${port}/health`,
-    );
+    logger.log(`🏥 Health check available at: http://localhost:${port}/health`);
   });
 }
 

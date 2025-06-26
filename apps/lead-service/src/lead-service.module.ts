@@ -1,9 +1,12 @@
 import { Module } from '@nestjs/common';
 import { LeadCoreModule } from '@app/lead-core';
 import {
+  LeadExceptionFilter,
   LeadServiceController,
+  HealthController,
 } from './application';
 import { ConfigModule } from '@nestjs/config';
+import { APP_FILTER } from '@nestjs/core';
 import { PinoLogModule } from '@logger/src';
 
 @Module({
@@ -16,8 +19,11 @@ import { PinoLogModule } from '@logger/src';
     LeadCoreModule,
   ],
   providers: [
-
+    {
+      provide: APP_FILTER,
+      useClass: LeadExceptionFilter,
+    },
   ],
-  controllers: [LeadServiceController],
+  controllers: [LeadServiceController, HealthController],
 })
 export class LeadServiceModule {}
