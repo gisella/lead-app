@@ -2,7 +2,27 @@ name: immo-dev-stack
 
 services:
 
-
+  lead-service:
+    container_name: "lead-service"
+    build:
+      dockerfile: ./apps/lead-service/Dockerfile
+      context: ./
+    depends_on:
+      postgres-db:
+        condition: service_healthy
+    env_file:
+      - .env_docker
+    ports:
+      - '3000:3000'
+    networks:
+      - backend
+    #restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
 
   postgres-db:
     container_name: "postgres-db"
@@ -33,7 +53,7 @@ services:
     ports:
       - "8888:80"
     depends_on:
-      db:
+      postgres-db:
         condition: service_healthy
     volumes:
       - pgadmin_data:/var/lib/pgadmin
