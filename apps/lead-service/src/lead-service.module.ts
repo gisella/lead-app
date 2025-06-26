@@ -6,7 +6,8 @@ import {
   HealthController,
 } from './application';
 import { ConfigModule } from '@nestjs/config';
-import { APP_FILTER } from '@nestjs/core';
+import { APP_FILTER, APP_INTERCEPTOR } from '@nestjs/core';
+import { ClassSerializerInterceptor } from '@nestjs/common';
 import { PinoLogModule } from '@logger/src';
 
 @Module({
@@ -22,6 +23,10 @@ import { PinoLogModule } from '@logger/src';
     {
       provide: APP_FILTER,
       useClass: LeadExceptionFilter,
+    },
+    {
+      provide: APP_INTERCEPTOR,
+      useClass: ClassSerializerInterceptor,
     },
   ],
   controllers: [LeadServiceController, HealthController],
