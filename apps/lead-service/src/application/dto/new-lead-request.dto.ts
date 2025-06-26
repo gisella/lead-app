@@ -9,6 +9,8 @@ import {
   ArrayMinSize,
   IsEmail,
   ArrayNotEmpty,
+  IsDefined,
+  ValidateNested,
 } from 'class-validator';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { IsAdult } from '../decorators/is-adult.decorator';
@@ -30,6 +32,7 @@ export class OwnerDto {
   })
   @IsString()
   @IsNotEmpty()
+  @IsDefined()
   first_name: string;
 
   @ApiProperty({
@@ -38,6 +41,7 @@ export class OwnerDto {
   })
   @IsString()
   @IsNotEmpty()
+  @IsDefined()
   last_name: string;
 
   @ApiPropertyOptional({
@@ -145,6 +149,7 @@ export class NewLeadRequestDto {
   })
   @ArrayMinSize(1, { message: 'At least one owner must be provided' })
   @ArrayNotEmpty({ message: 'At least one owner must be provided' })
+  @ValidateNested({ each: true })
   @Type(() => OwnerDto)
   owners: OwnerDto[];
 
