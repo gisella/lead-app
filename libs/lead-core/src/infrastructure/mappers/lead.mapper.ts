@@ -1,17 +1,17 @@
 import { Lead } from '@app/lead-core/domain';
 import { SimulationMapper } from '@app/lead-core/infrastructure/mappers/simulation.mapper';
 
-type OwnerType = 'FIRST' | 'SECOND';
-type LeadStatus = 'ACTIVE' | 'INACTIVE';
+export type OwnerType = 'FIRST' | 'SECOND';
+export type LeadStatus = 'ACTIVE' | 'INACTIVE';
 
-interface DbLead {
+export interface DbLead {
   id: bigint;
   phone_nr: string;
   status: LeadStatus | null;
   created_at: Date;
 }
 
-interface DbLeadRequest {
+export interface DbLeadRequest {
   amount: bigint;
   house_worth: bigint;
   city: string;
