@@ -1,0 +1,63 @@
+name: immo-dev-stack
+
+services:
+
+
+
+  postgres-db:
+    container_name: "postgres-db"
+    image: postgres:14-alpine
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: admin
+      POSTGRES_DB: immo
+    ports:
+      - '5432:5432'
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    networks:
+      - backend
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: "pgadmin"
+    environment:
+      PGADMIN_DEFAULT_EMAIL: pgadmin4@pgadmin.org
+      PGADMIN_DEFAULT_PASSWORD: admin
+    ports:
+      - "8888:80"
+    depends_on:
+      db:
+        condition: service_healthy
+    volumes:
+      - pgadmin_data:/var/lib/pgadmin
+    networks:
+      - backend
+    restart: unless-stopped
+
+  crm-service:
+   image: mockoon/cli
+   container_name: "crm-service"
+   command: ["--data", "data"]
+   ports:
+     - 3001:3001
+   volumes:
+     - ./docker/data/crm-data.json:/data:ro
+   networks:
+     - backend
+   restart: unless-stopped
+
+
+volumes:
+  db_data:
+  pgadmin_data:
+
+networks:
+  backend:
+    driver: bridge
