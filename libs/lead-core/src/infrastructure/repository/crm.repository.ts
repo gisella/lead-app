@@ -1,7 +1,7 @@
 import { CrmRepositoryI, Lead } from '@app/lead-core';
 import { HttpService } from '@nestjs/axios';
 import { ConfigService } from '@nestjs/config';
-import { catchError, firstValueFrom, timeout, retry, throwError } from 'rxjs';
+import { firstValueFrom, retry } from 'rxjs';
 import { AxiosError } from 'axios';
 import { Logger } from '@nestjs/common';
 import { ExternalServiceException } from '@app/lead-core';
@@ -21,22 +21,25 @@ export class CrmRepository extends CrmRepositoryI {
   }
 
   async syncLead(lead: Lead): Promise<void> {
-    await firstValueFrom(
-      this.httpService.post(this.CRM_API_URL + '/lead', lead).pipe(
-        timeout(this.TIMEOUT_MS),
-        retry({
-          count: this.MAX_RETRIES,
-          delay: 1000,
-        }),
-        catchError((error: AxiosError) => {
-          this.logger.error(
-            `Failed to sync lead ${lead.id} after ${this.MAX_RETRIES} retries:`,
-            error,
-          );
-          return throwError(() => this.handleAxiosException(error));
-        }),
-      ),
-    );
+    try {
+      await firstValueFrom(
+        this.httpService.post(this.CRM_API_URL + '/lead', lead).pipe(
+          retry({
+            count: this.MAX_RETRIES,
+            delay: 1000,
+          }),
+        ),
+      );
+    } catch (error: unknown) {
+      this.logger.error(
+        `Failed to sync lead ${lead.id} after ${this.MAX_RETRIES} retries:`,
+        error,
+      );
+      if (error instanceof AxiosError) {
+        throw this.handleAxiosException(error);
+      }
+      throw new ExternalServiceException('Unknown error occurred', '500');
+    }
   }
 
   private handleAxiosException(e: AxiosError): ExternalServiceException {
