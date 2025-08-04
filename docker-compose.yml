@@ -1,4 +1,4 @@
-name: immo-dev-stack
+name: dev-stack
 
 services:
 
@@ -30,7 +30,7 @@ services:
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: admin
-      POSTGRES_DB: immo
+      POSTGRES_DB: my_db
     ports:
       - '5432:5432'
     volumes:
