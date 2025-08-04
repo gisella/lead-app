@@ -1,6 +1,19 @@
 ## Description
 
+**Case Study: Sviluppo di un'API per la Gestione Lead**
 
+Funzionalità:
+
+* Creare un nuovo lead
+* Aggiornare un lead esistente
+* Sincronizzare il lead con un sistema esterno (CRM)
+
+
+**Specifiche dell'API**
+
+L'endpoint consente di creare un nuovo lead o aggiornare un lead esistente, verificando la sua presenza nel
+sistema tramite il numero di telefono. Una volta effettuata la creazione o l'aggiornamento, l'API deve
+sincronizzare i dati con un sistema CRM esterno.
 
 ## Project setup
 
